@@ -6,6 +6,7 @@
 # Linkdin: Agamdeep Singh
 
 from turtle import Screen
+from score import Score
 from snake import Snake
 from food import Food
 import time
@@ -20,6 +21,7 @@ s.tracer(0)
 # Create the Snake, Food and Score
 snake = Snake()
 food = Food()
+scoreboard = Score()
 
 # Keep a track of which key is pressed
 s.listen()
@@ -40,6 +42,7 @@ while game_on:
     # Detect Collision
     if snake.head.distance(food) < 15:
         food.refresh()
-        snake.length += 1
+        scoreboard.score += 1
+        scoreboard.update()
 
 # s.exitonclick()
