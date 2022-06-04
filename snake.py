@@ -57,9 +57,3 @@ class Snake:
         """Function to move the snake right"""
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
-
-    def pause(self):
-        self.distance = 0
-    
-    def resume(self):
-        self.distance = 20
