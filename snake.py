@@ -1,7 +1,7 @@
 from turtle import Turtle
 
+
 START_POSITIONS = [(0,0), (-20,0), (-40,0)]
-DISTANCE = 20
 UP = 90
 DOWN = 270
 LEFT = 180
@@ -14,22 +14,29 @@ class Snake:
         self.boxes = []
         self.create_snake()
         self.head = self.boxes[0]
+        self.distance = 20
 
     def create_snake(self):
         """Function to create the snake"""
         for pos in START_POSITIONS:
-            t = Turtle("square")
-            t.color("white")
-            t.penup()
-            t.goto(pos)
-            self.boxes.append(t)
+            self.add_box(pos)
     
+    def add_box(self, pos):
+        t = Turtle("square")
+        t.color("white")
+        t.penup()
+        t.goto(pos)
+        self.boxes.append(t)
+
+    def extend(self):
+        self.add_box(self.boxes[-1].position())
+
     def move(self):
         """Function to move the snake"""
         for box in range((len(self.boxes) - 1), 0, -1):
             x, y = self.boxes[box - 1].pos()
             self.boxes[box].goto(x, y)
-        self.head.forward(DISTANCE)
+        self.head.forward(self.distance)
     
     def forward(self):
         """Function to move the snake forward"""
@@ -50,3 +57,9 @@ class Snake:
         """Function to move the snake right"""
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
+
+    def pause(self):
+        self.distance = 0
+    
+    def resume(self):
+        self.distance = 20

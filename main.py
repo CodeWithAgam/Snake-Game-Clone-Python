@@ -11,6 +11,7 @@ from snake import Snake
 from food import Food
 import time
 
+
 # Setting up the Screen
 s = Screen()
 s.setup(600, 600)
@@ -26,11 +27,12 @@ scoreboard = Score()
 # Keep a track of which key is pressed
 s.listen()
 
-# Check the key pressed and control the snake
+# Check the key pressed and control the snake/game
 s.onkey(snake.forward,"Up") or s.onkey(snake.forward,"w")
 s.onkey(snake.backward,"Down") or s.onkey(snake.backward,"s")
 s.onkey(snake.left,"Left") or s.onkey(snake.left,"a")
 s.onkey(snake.right,"Right") or s.onkey(snake.right,"d")
+s.onkey(s.bye,"Escape") or s.onkey(s.bye,"q")
 
 # Refresh the screen and Tell the Snake to move
 game_on = True
@@ -39,10 +41,22 @@ while game_on:
     time.sleep(0.1)
     snake.move()
 
-    # Detect Collision
+    # Refresh the food and the score
     if snake.head.distance(food) < 15:
         food.refresh()
+        snake.extend()
         scoreboard.score += 1
         scoreboard.update()
+    
+    # Detect Collision with the wall
+    if snake.head.xcor() > 280 or snake.head.ycor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280:
+        scoreboard.game_over()
+        game_on = False
 
-# s.exitonclick()
+    # Detect Collision with the body
+    for box in snake.boxes[1:]:
+        if snake.head.distance(box) < 10:
+            scoreboard.game_over()
+            game_on = False
+
+s.exitonclick()
