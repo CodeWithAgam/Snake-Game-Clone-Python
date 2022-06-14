@@ -22,6 +22,7 @@ class Snake:
             self.add_box(pos)
     
     def add_box(self, pos):
+        """Function to add a box to the snake"""
         t = Turtle("square")
         t.color("white")
         t.penup()
@@ -29,7 +30,16 @@ class Snake:
         self.boxes.append(t)
 
     def extend(self):
+        """Function to extend the snake"""
         self.add_box(self.boxes[-1].position())
+
+    def reset(self):
+        """Function to reset the snake"""
+        for box in self.boxes:
+            box.goto(1000, 1000)
+        self.boxes.clear()
+        self.create_snake()
+        self.head = self.boxes[0]
 
     def move(self):
         """Function to move the snake"""

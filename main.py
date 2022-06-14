@@ -9,7 +9,7 @@ from turtle import Screen
 from score import Score
 from snake import Snake
 from food import Food
-# import pyautogui as pg
+import pyautogui as pg
 import time
 
 
@@ -49,15 +49,13 @@ while game_on:
     
     # Detect Collision with the wall
     if snake.head.xcor() > 280 or snake.head.ycor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280:
-        # choice = pg.confirm("Do You Want To Continue?", buttons=["Yes", "No"])
-        # if choice == "No":
-        #     game_on = False
-        # else:
-        #     scoreboard.rest()
+        scoreboard.reset()
+        snake.reset()
 
     # Detect Collision with the body
     for box in snake.boxes[1:]:
         if snake.head.distance(box) < 10:
             scoreboard.reset()
+            snake.reset()
 
 s.exitonclick()
